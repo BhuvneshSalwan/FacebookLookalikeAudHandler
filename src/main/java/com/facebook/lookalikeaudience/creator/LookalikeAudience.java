@@ -3,6 +3,7 @@ package com.facebook.lookalikeaudience.creator;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -13,6 +14,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import com.facebook.lookalikeaudience.main.App;
+import com.google.api.services.bigquery.model.TableDataInsertAllRequest.Rows;
 import com.google.api.services.bigquery.model.TableRow;
 
 public class LookalikeAudience {
@@ -25,12 +28,14 @@ public class LookalikeAudience {
 		
 		try{
 			
+			String audience_name;
 			String subtype;
 			String audience_id;
 			String country;
 			String ratio;
 			String account_id;
 			
+			try{ audience_name = String.valueOf(row.getF().get(0).getV()); } catch(Exception e){ audience_name = "NULL";}
 			try{ account_id = String.valueOf(row.getF().get(3).getV()); } catch(Exception e){ account_id = "NULL";}
 			try{ subtype = String.valueOf(row.getF().get(1).getV()); } catch(Exception e){ subtype = "NULL"; }
 			try{ audience_id = String.valueOf(row.getF().get(2).getV()); } catch(Exception e){ audience_id = "NULL"; }
@@ -88,6 +93,20 @@ public class LookalikeAudience {
 			}
 			
 			System.out.println("Response Content : " + buffer.toString());
+			
+			Rows logsRow = new Rows();
+			
+			HashMap<String, Object> logsMap = new HashMap<String, Object>();
+			
+			logsMap.put("account_id", account_id);
+			logsMap.put("operation", "LOOKALIKE_AUDIENCE_CREATE");
+			logsMap.put("table_name", "LOOKALIKE_CREATE");
+			logsMap.put("audience_name", audience_name);
+			logsMap.put("status_code", response.getStatusLine().getStatusCode());
+			logsMap.put("response_message", buffer.toString());
+			
+			logsRow.setJson(logsMap);
+			App.logChunk.add(logsRow);
 			
 			if(response.getStatusLine().getStatusCode() >= 200 && response.getStatusLine().getStatusCode() < 300){
 				
