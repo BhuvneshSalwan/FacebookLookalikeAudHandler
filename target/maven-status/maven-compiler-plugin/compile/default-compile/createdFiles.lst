@@ -1,0 +1,4 @@
+com\google\bigquery\main\TableResults.class
+com\google\bigquery\main\Authenticate.class
+com\facebook\lookalikeaudience\creator\LookalikeAudience.class
+com\facebook\lookalikeaudience\main\App.class
