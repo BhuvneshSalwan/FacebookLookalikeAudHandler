@@ -35,6 +35,8 @@ public class LookalikeAudience {
 			String country;
 			String ratio;
 			String account_id;
+			String hostname;
+			String parse_client_id;
 			
 			try{ audience_name = String.valueOf(row.getF().get(0).getV()); } catch(Exception e){ audience_name = "NULL";}
 			try{ account_id = String.valueOf(row.getF().get(3).getV()); } catch(Exception e){ account_id = "NULL";}
@@ -42,6 +44,8 @@ public class LookalikeAudience {
 			try{ audience_id = String.valueOf(row.getF().get(2).getV()); } catch(Exception e){ audience_id = "NULL"; }
 			try{ country = String.valueOf(row.getF().get(5).getV()); } catch(Exception e){ country = "NULL"; }
 			try{ ratio = String.valueOf(row.getF().get(6).getV()); } catch(Exception e){ System.out.println(e); ratio = "NULL"; }
+			try{ hostname = String.valueOf(row.getF().get(4).getV()); } catch(Exception e){ System.out.println(e); hostname = "NULL"; }
+			try{ parse_client_id = String.valueOf(row.getF().get(7).getV()); } catch(Exception e){ System.out.println(e); parse_client_id = "NULL"; }
 			
 			if(account_id.equals("NULL")){
 				System.out.println("Response Message : Couldn't find the Account ID for the Audience.");
@@ -99,6 +103,8 @@ public class LookalikeAudience {
 			
 			HashMap<String, Object> logsMap = new HashMap<String, Object>();
 			
+			logsMap.put("hostname", hostname);
+			logsMap.put("parse_client_id", parse_client_id);
 			logsMap.put("account_id", account_id);
 			logsMap.put("operation", "CREATE");
 			logsMap.put("table_name", "LOOKALIKE_CREATE");

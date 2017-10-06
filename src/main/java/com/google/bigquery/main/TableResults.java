@@ -58,7 +58,7 @@ public class TableResults {
 		
 		try{
 		
-			String querysql = "SELECT audience_name,subtype,audience_id,account_id,hostname,country,ratio FROM  ["+PROJECT_ID+":"+DATASET_ID+"."+TABLE_ID+"]";
+			String querysql = "SELECT audience_name,subtype,audience_id,account_id,hostname,country,ratio,parse_client_id FROM  ["+PROJECT_ID+":"+DATASET_ID+"."+TABLE_ID+"]";
 		
 			JobReference jobId = startQuery(bigquery, PROJECT_ID, querysql);
 		
