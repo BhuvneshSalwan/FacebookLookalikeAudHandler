@@ -1,5 +1,13 @@
 The Code is used to create Lookalike of All the Eligible Custom Audiences on Facebook.
 
+Code Version : v4.1
+
+Difference from v4.0 :
+
+1. Changed the location of adding data to BQ from bottom to below the for loop.
+
+
+
 Code Version : v4.0
 
 Difference from v3.0 :
